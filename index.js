@@ -63,6 +63,10 @@ function createCard(title, author, pages, index){
     const read = document.createElement('button');
     const remove = document.createElement('button');
 
+  titleStyle="font-size:1.2em; font-weight:bold;"
+  authorStyle="font-style:italic";
+  bookAuthor.setAttribute('style',authorStyle);
+  bookTitle.setAttribute('style', titleStyle);  
   card.classList.add("card");
   buttons.classList.add('buttons')
   read.classList.add('btn');

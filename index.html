@@ -8,13 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Caveat:wght@400;500;700&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     <script src="index.js" defer></script>
     <h1>My Library</h1>
-    <dialog>
+    <dialog style="border: double; color: ;">
         
-        <form action="#" id="my_form">
+        <form action="#" id="my_form" style="background:#dce0d9; padding: 20px;">
             <label for="fname">Book Title:</label><br>
             <input class="input" type="text" id="title" name="text" autocomplete="off" required><br>
             <span class="alert" style="color:red"></span><br>
@@ -24,7 +25,7 @@
             <label for="fname">No. of Pages:</label><br>
             <input class="input" type="number" id="pages" name="number" autocomplete="off" required><br>
             <span class="alert" style="color:red"></span><br>
-            <input class="submit" type="button" value="Submit" id="btn" style="text-align: center;">
+            <input class="submit" type="button" value="Submit" id="btn" style="margin-left: 4em; height: 2em; width: 5em; background-color: #a4b2bb; cursor: pointer;">
         </form>
         
       </dialog>

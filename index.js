@@ -40,7 +40,7 @@ function addBookToLibrary(e){
   var title=document.getElementById("title").value;
   var author=document.getElementById("author").value;
   var pages=document.getElementById("pages").value;
-  console.log(e);
+ 
   
   var input=document.querySelectorAll('input');
   let i = null;
@@ -48,11 +48,11 @@ function addBookToLibrary(e){
     if(input[i].value==""){
       alert[i].innerHTML="Field must be filled out!";
     }
-    // else{
-    //   alert[i].innerHTML="";
-    // }
+    else if(alert[i]!=null){
+       alert[i].innerHTML="";
+     }
   }
-  console.log(input[0].value);
+ 
     if(input[0].value !== '' && input[1].value !== '' && input[2].value !== ''){
    const book=new Book(title, author, pages);
    myLibrary.push(book);
@@ -125,15 +125,14 @@ function check(event) {
 }*/
 
 function reset(){
-        console.log("I'm called");
+       
         const btn = document.getElementById('btn');
         const inputs = document.querySelectorAll('#title, #author, #pages');
         inputs.forEach(input => {
           input.value = '';
         });
-        console.log(alert[0]);
+      
         for(i in alert){
-          console.log(alert[i].innerHTML);
           alert[i].innerHTML = '';
         }
 }

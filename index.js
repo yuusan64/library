@@ -9,30 +9,15 @@ showButton.addEventListener("click", () => {
 });
 
 const myLibrary=[];
-
+var index=0;
 //constructor
-function Book(title, author, pages) {
+function Book(title, author, pages, index) {
 this.title=title;
 this.author=author;
 this.pages=pages;
+this.index=index;
 }
 
-// function validate(e){
-//   e.preventDefault();
-//   console.log(e);
-//   var alert=document.getElementsByClassName('alert');
-//   var input=document.getElementsByTagName('input');
-//   let i=0;
-//   for(i in input){
-//     if(input[i].value==""){
-//       alert[i].innerHTML="Field must be filled out!";
-//     }
-//     else{
-//       alert[i].innerHTML="";
-//     } 
-//   }
- 
-// }
 
 submit.addEventListener("click", addBookToLibrary);
 
@@ -54,23 +39,21 @@ function addBookToLibrary(e){
   }
  
     if(input[0].value !== '' && input[1].value !== '' && input[2].value !== ''){
-   const book=new Book(title, author, pages);
+   const book=new Book(title, author, pages, index);
    myLibrary.push(book);
+   console.log(myLibrary);
    dialog.close();
-   createCard(title, author, pages);
+   createCard(title, author, pages, index);
+   index++;
    reset();   
     }
   
-    
-       // if (title == ""|| author == ""||pages == "") {
-        //  alert.innerHTML="Field must be filled out";
-         // return false;
-        //}
+
   e.preventDefault();
     }
 
       
-function createCard(title, author, pages){
+function createCard(title, author, pages, index){
     var container=document.getElementById("container");
     var card=document.createElement("div");
     const bookTitle = document.createElement('p');
@@ -84,22 +67,29 @@ function createCard(title, author, pages){
   buttons.classList.add('buttons')
   read.classList.add('btn');
   remove.classList.add('btn');
-  //read.onclick = toggleRead;
+  read.classList.add('green');
   //remove.onclick = removeBook;
+
+  read.addEventListener('click', function() {
+    if (read.classList.contains('red')) {   
+      read.classList.remove('red');
+      read.classList.add('green');
+      read.innerHTML = 'Read';
+    }
+    else {
+      read.classList.remove('green');
+      read.classList.add('red');
+      read.innerHTML = 'Not Read';
+    }
+});
 
    bookTitle.textContent = title.toUpperCase();
    bookAuthor.textContent = author;
    bookPages.textContent = `${pages} pages`
    remove.textContent = 'Remove';
-   read.textContent = 'Not read';
+   read.textContent = 'Read';
 
-    //card.innerHTML= "<div>"+title.toUpperCase()+"</div><div>"+author+"</div><div>"+pages+"</div><div><button>Not read</button></div>"+"<div><button>Remove</button></div>";
-    // var cardStyle="padding: 4px 4px; width: 10em; height: 12em; background-color:rgb(253, 225, 218); box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);";
-    //card.setAttribute('style', cardStyle);
-   // document.body.appendChild(card);
-   // container.appendChild(card);
-
-
+   
   card.appendChild(bookTitle);
   card.appendChild(bookAuthor);
   card.appendChild(bookPages);
@@ -107,22 +97,17 @@ function createCard(title, author, pages){
   buttons.appendChild(remove);
   card.appendChild(buttons);
   container.appendChild(card);   
+
+  remove.addEventListener('click', function(){
+    myLibrary.splice(index, 1);
+    console.log("I'm called");
+    console.log(myLibrary);
+    card.remove();
+  });
+  
       
 }
 
-
-const removeBook = (e) => {
-  const remove = e.target.parentNode.parentNode.firstChild.innerHTML.replaceAll(
-    '"',
-    ''
-  )
-  }
-
-/*
-function check(event) {
-  event.preventDefault();
-   submit.addEventListener("click", check, false); 
-}*/
 
 function reset(){
        
@@ -137,7 +122,4 @@ function reset(){
         }
 }
 
-function readStatus(status){
-    this.read=status;
-}
 

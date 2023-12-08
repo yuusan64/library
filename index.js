@@ -33,12 +33,15 @@ function addBookToLibrary(e){
     if(input[i].value==""){
       alert[i].innerHTML="Field must be filled out!";
     }
+    else if(input[i].value<0){
+      alert[i].innerHTML="Value must be greater than 0";
+    }
     else if(alert[i]!=null){
        alert[i].innerHTML="";
      }
   }
  
-    if(input[0].value !== '' && input[1].value !== '' && input[2].value !== ''){
+    if(input[0].value !== '' && input[1].value !== '' && input[2].value !== '' && input[2].value>0){
    const book=new Book(title, author, pages, index);
    myLibrary.push(book);
    console.log(myLibrary);

@@ -9,7 +9,6 @@ this.index=index;
 
 class LibraryUI{
  constructor(){
-  console.log('LibraryUI constructor called');
   this.myLibrary=[];
   this.index=0;
   this.dialog = document.querySelector("dialog");
@@ -24,10 +23,7 @@ class LibraryUI{
 
 
  initializeEventListeners(){
-  this.showButton.addEventListener("click", () => {
-    console.log('Attempting to show dialog');
-    this.dialog.showModal();
-});
+  this.showButton.addEventListener("click", () => this.dialog.showModal());
   this.submit.addEventListener("click", this.addBookToLibrary.bind(this));
  }
 

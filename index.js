@@ -1,63 +1,72 @@
-const dialog = document.querySelector("dialog");
-const showButton = document.querySelector("dialog + div button");
-const submit = document.querySelector("dialog .submit");
-
-var alert=document.getElementsByClassName('alert');
-// opens form
-showButton.addEventListener("click", () => {
-  dialog.showModal();
-});
-
-const myLibrary=[];
-var index=0;
-//constructor
-function Book(title, author, pages, index) {
+class Book{
+constructor(title, author, pages, index) {
 this.title=title;
 this.author=author;
 this.pages=pages;
 this.index=index;
 }
+}
+
+class LibraryUI{
+ constructor(){
+  console.log('LibraryUI constructor called');
+  this.myLibrary=[];
+  this.index=0;
+  this.dialog = document.querySelector("dialog");
+  this.showButton = document.querySelector("dialog + div button");
+  console.log(this.showButton);
+  this.submit = document.querySelector("dialog .submit");
+  this.alert=document.getElementsByClassName('alert');
+  this.container=document.getElementById("container");
+
+  this.initializeEventListeners();
+ } 
 
 
-submit.addEventListener("click", addBookToLibrary);
+ initializeEventListeners(){
+  this.showButton.addEventListener("click", () => {
+    console.log('Attempting to show dialog');
+    this.dialog.showModal();
+});
+  this.submit.addEventListener("click", this.addBookToLibrary.bind(this));
+ }
 
-function addBookToLibrary(e){
+ addBookToLibrary(e){
+  e.preventDefault();
+
   var title=document.getElementById("title").value;
   var author=document.getElementById("author").value;
   var pages=document.getElementById("pages").value;
- 
-  
   var input=document.querySelectorAll('input');
-  let i = null;
-  for(i in input){
-    if(input[i].value==""){
-      alert[i].innerHTML="Field must be filled out!";
+
+  let isValid=true;
+  for(let i=0; i<input.length; i++){
+    if(input[i].value===""){
+      this.alert[i].innerHTML="Field must be filled out!";
+      isValid= false;
     }
     else if(input[i].value<0){
-      alert[i].innerHTML="Value must be greater than 0";
+      this.alert[i].innerHTML="Value must be greater than 0";
+      isValid=false;
     }
-    else if(alert[i]!=null){
-       alert[i].innerHTML="";
+    else if(this.alert[i]!=null){
+       this.alert[i].innerHTML="";
      }
   }
  
-    if(input[0].value !== '' && input[1].value !== '' && input[2].value !== '' && input[2].value>0){
-   const book=new Book(title, author, pages, index);
-   myLibrary.push(book);
-   console.log(myLibrary);
-   dialog.close();
-   createCard(title, author, pages, index);
-   index++;
-   reset();   
+    if(isValid){
+   const book=new Book(title, author, pages, this.index);
+   this.myLibrary.push(book);
+   this.dialog.close();
+   this.createCard(title, author, pages, this.index);
+   this.index++;
+   this.reset();   
     }
-  
-
-  e.preventDefault();
     }
 
       
-function createCard(title, author, pages, index){
-    var container=document.getElementById("container");
+createCard(title, author, pages, index){
+   
     var card=document.createElement("div");
     const bookTitle = document.createElement('p');
     const bookAuthor = document.createElement('p');
@@ -66,8 +75,8 @@ function createCard(title, author, pages, index){
     const read = document.createElement('button');
     const remove = document.createElement('button');
 
-  titleStyle="font-size:1.2em; font-weight:bold;"
-  authorStyle="font-style:italic";
+  let titleStyle="font-size:1.2em; font-weight:bold;"
+  let authorStyle="font-style:italic";
   bookAuthor.setAttribute('style',authorStyle);
   bookTitle.setAttribute('style', titleStyle);  
   card.classList.add("card");
@@ -75,8 +84,7 @@ function createCard(title, author, pages, index){
   read.classList.add('btn');
   remove.classList.add('btn');
   read.classList.add('green');
-  //remove.onclick = removeBook;
-
+ 
   read.addEventListener('click', function() {
     if (read.classList.contains('red')) {   
       read.classList.remove('red');
@@ -103,30 +111,24 @@ function createCard(title, author, pages, index){
   buttons.appendChild(read);
   buttons.appendChild(remove);
   card.appendChild(buttons);
-  container.appendChild(card);   
-
-  remove.addEventListener('click', function(){
-    myLibrary.splice(index, 1);
-    console.log("I'm called");
-    console.log(myLibrary);
-    card.remove();
-  });
+  container.appendChild(card);  
   
-      
+  remove.addEventListener('click', this.removeBook.bind(this, card, index));
 }
+  
+  removeBook(card, index){
+      this.myLibrary.splice(index, 1);
+      card.remove();
+  }    
 
-
-function reset(){
-       
-        const btn = document.getElementById('btn');
+reset(){
         const inputs = document.querySelectorAll('#title, #author, #pages');
-        inputs.forEach(input => {
-          input.value = '';
-        });
-      
-        for(i in alert){
-          alert[i].innerHTML = '';
+        inputs.forEach(input => input.value = '');
+        Array.from(this.alert).forEach(a=>a.innerHTML="");       
+  
         }
 }
 
+
+new LibraryUI();
 

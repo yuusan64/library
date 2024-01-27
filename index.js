@@ -37,11 +37,11 @@ class LibraryUI{
 
   let isValid=true;
   for(let i=0; i<input.length; i++){
-    if(input[i].value===""){
+    if(input[i].validity.valueMissing){
       this.alert[i].innerHTML="Field must be filled out!";
       isValid= false;
     }
-    else if(input[i].value<0){
+    else if(input[i].validity.rangeUnderflow){
       this.alert[i].innerHTML="Value must be greater than 0";
       isValid=false;
     }

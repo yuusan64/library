@@ -103,6 +103,6 @@ input:focus{
   border: 2px solid #99aa8c;
 }
 
-.input{
-  
+input[type='number']:invalid{
+color: #d70202; 
 }
